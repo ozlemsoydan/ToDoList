@@ -1,8 +1,9 @@
-package com.ozlemaglar.ToDoList.impl;
+package com.ozlemaglar.ToDoList.services.impl;
 
 import com.ozlemaglar.ToDoList.model.Item;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ITodoService {
 
@@ -19,5 +20,5 @@ public interface ITodoService {
     public Item updateTodo(Long id,Item item);
 
     //delete
-    public Item deleteTodo(Long id);
+    public Map<String, Boolean> deleteTodo(Long id);
 }
