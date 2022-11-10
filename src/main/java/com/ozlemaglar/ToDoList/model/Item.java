@@ -25,7 +25,7 @@ public class Item {
 
     @Column
     @NotNull(message = "task.validation.constraints.NotNull.message")
-    private String title;
+    private String description;
 
     @Column
     private boolean isDone;
