@@ -16,33 +16,37 @@ import java.util.Map;
 @CrossOrigin("http://localhost:3000")
 public class TodoController {
 
-    @Autowired
     private ITodoService todoService;
 
+    //ADD
     @PostMapping("/add")
     public ResponseEntity createTodo(@RequestBody Item item) {
         todoService.createTodo(item);
         return new ResponseEntity(HttpStatus.CREATED);
     }
 
+    //LİST
     @GetMapping("/list")
     public ResponseEntity<List<Item>> getAllTodo() {
         List<Item> list = todoService.getAllTodo();
         return ResponseEntity.ok(list);
     }
 
-    @GetMapping("/find/{id}")
+    //FİND
+    @GetMapping("/{id}")
     public ResponseEntity<Item> getItemById(@PathVariable(name = "id") Long id) {
         return ResponseEntity.ok(todoService.getItemById(id));
     }
 
-    @PutMapping("/update/{id}")
+    //UPDATE
+    @PutMapping("/{id}")
     public ResponseEntity<Item> updateTodo(@PathVariable(name = "id") Long id, @RequestBody Item item) {
         todoService.updateTodo(id,item);
         return ResponseEntity.ok(item);
     }
 
-    @DeleteMapping("/delete/{id}")
+    //DELETE
+    @DeleteMapping("/{id}")
     public ResponseEntity<Map<String, Boolean>> deleteTodo(@PathVariable(name = "id") Long id) {
         todoService.deleteTodo(id);
         Map<String,Boolean> response=new HashMap<>();
