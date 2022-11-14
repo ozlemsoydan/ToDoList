@@ -2,6 +2,7 @@ package com.ozlemaglar.ToDoList.rest.controller;
 
 import com.ozlemaglar.ToDoList.services.impl.ITodoService;
 import com.ozlemaglar.ToDoList.model.Item;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +17,13 @@ import java.util.Map;
 @CrossOrigin("http://localhost:3000")
 public class TodoController {
 
+    @Autowired
     private ITodoService todoService;
+
+    @GetMapping({"/","/index"})
+    public String getIndex() {
+        return "index";
+    }
 
     //ADD
     @PostMapping("/add")
@@ -39,9 +46,9 @@ public class TodoController {
     }
 
     //UPDATE
-    @PutMapping("/{id}")
-    public ResponseEntity<Item> updateTodo(@PathVariable(name = "id") Long id, @RequestBody Item item) {
-        todoService.updateTodo(id,item);
+    @PutMapping("/update")
+    public ResponseEntity<Item> updateTodo( @RequestBody Item item) {
+        todoService.updateTodo(item);
         return ResponseEntity.ok(item);
     }
 

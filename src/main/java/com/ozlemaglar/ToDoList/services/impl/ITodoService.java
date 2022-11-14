@@ -7,6 +7,8 @@ import java.util.Map;
 
 public interface ITodoService {
 
+    public String getIndex();
+
     //add
     public Item createTodo(Item item);
 
@@ -17,7 +19,7 @@ public interface ITodoService {
     public List<Item> getAllTodo();
 
     //update
-    public Item updateTodo(Long id,Item item);
+    public Item updateTodo(Item item);
 
     //delete
     public Map<String, Boolean> deleteTodo(Long id);
