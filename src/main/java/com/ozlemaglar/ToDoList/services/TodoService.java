@@ -19,7 +19,6 @@ public class TodoService implements ITodoService {
     private final ITodoRepo repository;
 
 
-
     @Override
     public Item createTodo(Item item) {
         item.setCreatedDate(new Date());
@@ -43,12 +42,12 @@ public class TodoService implements ITodoService {
     public Item updateTodo(Item item) {
         if (StringUtils.isNotEmpty(item.getId().toString())) {
             Optional<Item> item1 = repository.findById(item.getId());
-            if(item1.isPresent()){
+            if (item1.isPresent()) {
                 item.setCreatedDate(item1.get().getCreatedDate());
                 item.setUpdateDate(new Date());
                 repository.save(item);
 
-            }else {
+            } else {
                 throw new ResourceNotFoundException("id bulunamadı");
             }
         } else {
@@ -59,8 +58,13 @@ public class TodoService implements ITodoService {
 
     @Override
     public Map<String, Boolean> deleteTodo(Long id) {
-        Item item = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException(id + " id bulunamadı"));
-        repository.delete(item);
+        if (id == -1) {
+            repository.deleteAll();
+        } else {
+            Item item = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException(id + " id bulunamadı"));
+            repository.delete(item);
+
+        }
         Map<String, Boolean> response = new HashMap<>();
         response.put("silindi", Boolean.TRUE);
         return response;
