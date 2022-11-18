@@ -20,10 +20,6 @@ public class TodoController {
     @Autowired
     private ITodoService todoService;
 
-    @GetMapping({"/","/index"})
-    public String getIndex() {
-        return "index";
-    }
 
     //ADD
     @PostMapping("/add")

@@ -18,14 +18,12 @@ public class TodoService implements ITodoService {
 
     private final ITodoRepo repository;
 
-    @Override
-    public String getIndex() {
-        return "index";
-    }
+
 
     @Override
     public Item createTodo(Item item) {
         item.setCreatedDate(new Date());
+        item.setDone(false);
         repository.save(item);
         return item;
     }

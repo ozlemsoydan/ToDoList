@@ -7,8 +7,6 @@ import java.util.Map;
 
 public interface ITodoService {
 
-    public String getIndex();
-
     //add
     public Item createTodo(Item item);
 
