@@ -22,8 +22,8 @@ class TodoService {
     }
 
     //update
-    updateTodo(id, item) {
-        return axios.put(todoURL + id, item);
+    updateTodo(item) {
+        return axios.put(todoURL+ "update", item);
     }
 
     //delete
@@ -35,6 +35,7 @@ class TodoService {
 
         return axios.delete(todoURL+ "-1");
     }
+
 
 }
 export default new TodoService();
