@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function TodoList({ todo, removeById, handleChangeTodo, handleCheck }) {
+export default function TodoList({ todo, removeById, handleChangeTodo, updateTodo, handleCheck }) {
 
 
 
@@ -11,7 +11,7 @@ export default function TodoList({ todo, removeById, handleChangeTodo, handleChe
     if (isEditing) {
         todoContent = (
             <>
-             
+
                 <input type="text" className="update-input " value={todo.description} disabled={!isEditing}
                     onChange={(e) => {
                         handleChangeTodo({
@@ -20,10 +20,12 @@ export default function TodoList({ todo, removeById, handleChangeTodo, handleChe
                         });
                     }}
                 />
-                <button className="save-btn"
+                <button className="btn btn-primary"
                     onClick={(todo) => {
                         setIsEditing((isEditing = !isEditing));
-                    }}> Kaydet
+                    }}
+                    onChange={updateTodo} >
+                    <i className="fa-solid fa-floppy-disk"></i>
                 </button>
             </>
         );
@@ -41,14 +43,24 @@ export default function TodoList({ todo, removeById, handleChangeTodo, handleChe
 
     return (
         <>
-            <div className="flex justify-between items-center w-full">
-                <input className="" type="checkbox" onChange={handleCheck} />
 
-                <span className="justify-end">{todoContent}</span>
-                <button className="btn btn-danger"
+            <div className="d-flex mb-3">
+                <div className="input-group d-flex align-items-center">
+
+                    <div class="form-check d-flex align-items-center ">
+                        <input class="form-check-input me-3 " type="checkbox" value="" id="Check" onChange={handleCheck} />
+                        <label class="form-check-label d-flex align-items-center text-start" for="Check">
+                            {todoContent}
+                        </label>
+                    </div>
+
+                </div>
+                <button className="btn btn-outline-danger float-right"
                     onClick={() => removeById(todo)}
                 ><i className="fa-solid fa-trash"></i></button>
             </div>
+
+
         </>
 
     );

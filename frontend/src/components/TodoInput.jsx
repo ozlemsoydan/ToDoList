@@ -7,8 +7,7 @@ import toast from 'react-hot-toast';
 function TodoInput() {
     const [text, setText] = useState();
     const [todos, setTodo] = useState([]);
-    const [currentTodo, setCurrentTodo] = useState(null);
-    const [currentIndex, setCurrentIndex] = useState(-1);
+    const [value, setValue] = useState();
     const input = useRef();
     const [checked, setChecked] = useState([]);
 
@@ -42,7 +41,6 @@ function TodoInput() {
             };
 
             TodoService.createTodo(obj).then(response => {
-                debugger;
                 toast.success("Kayıt eklendi");
                 setText("");
                 refreshList();
@@ -57,15 +55,14 @@ function TodoInput() {
     //refresh
     const refreshList = () => {
         getAll();
-        setCurrentTodo(null);
-        setCurrentIndex(-1);
+
     };
 
     //deleteAll
     const deleteAllTodo = () => {
         TodoService.deleteAll()
             .then(response => {
-                toast.success('Kayıtlar Silin')
+                toast.success('Kayıtlar Silindi')
                 refreshList();
 
             })
@@ -103,17 +100,36 @@ function TodoInput() {
                 }
             })
         );
+
+
     }
+
+    //update
+    const updateTodo = (todo) => {
+        TodoService.updateTodo(todo).then(response => {
+            setTodo(response.data);
+            toast.success('Kayıt Güncellendi')
+            refreshList();
+
+        })
+            .catch(e => {
+                toast.error('Hata oluştu!')
+            });
+    }
+
+
 
     const handleCheck = (event) => {
         var updatedList = [...checked];
+
         if (event.target.checked) {
-          updatedList = [...checked, event.target.value];
+            updatedList = [...checked, event.target.value];
         } else {
-          updatedList.splice(checked.indexOf(event.target.value), 1);
+            updatedList.splice(checked.indexOf(event.target.value), 1);
         }
         setChecked(updatedList);
-      };
+
+    };
 
     return (
         <>
@@ -124,30 +140,36 @@ function TodoInput() {
                 <form className="form-group m-5"
                     onSubmit={(e) => e.preventDefault()}>
 
-                    <input className="todo-form" placeholder="Todo..." type="text" name="search" value={text} ref={input}
+                    <input className="todo-form" placeholder="Yapılacaklar..." type="text" name="search" value={text} ref={input}
                         onChange={(e) => setText(e.target.value)} />
 
-                    <button className="add-button"
+                    <button className="btn btn-primary"
                         onClick={() => handleInput()}>Ekle</button>
                 </form>
 
-                <ul className="list-group">
-                    {todos.map((todo) => (
-                        <li className="list-group-item" key={todo.id}>
 
-                            <TodoList
-                                todo={todo}
-                                removeById={removeById}
-                                handleChangeTodo={handleChangeTodo}
-                                handleCheck={handleCheck}/>
-                        </li>
-                    ))}
+                <div className="container">
+                    <ul className="list-group ">
+                        {todos.map((todo) => (
+                            <li className="list-group-item mt-1 pt-4" key={todo.id}>
 
-                </ul>
+                                <TodoList
+                                    todo={todo}
+                                    removeById={removeById}
+                                    handleChangeTodo={handleChangeTodo}
+                                    updateTodo={updateTodo}
+                                    handleCheck={handleCheck} />
+                            </li>
+                        ))}
+
+                    </ul>
+
+                </div>
+
 
                 {todos.length > 0 && (
-                    <div className="counter">
-                        {todos.length} adet todo var.
+                    <div className="counter m-3" style={{ color: "silver" }}>
+                        {todos.length} adet kayıt var.
                     </div>
 
                 )}
