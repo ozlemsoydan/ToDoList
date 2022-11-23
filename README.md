@@ -12,5 +12,5 @@
 
 ![Screenshot1](https://github.com/ozlemsoydan/ToDoList/blob/main/ss/deleteAll.png)
 ![Screenshot1](https://github.com/ozlemsoydan/ToDoList/blob/main/ss/add.png)
-![Screenshot1](https://github.com/ozlemsoydan/ToDoList/blob/main/ss/list.png)
+![Screenshot1](https://github.com/ozlemsoydan/ToDoList/blob/main/ss/list1.png)
 ![Screenshot1](https://github.com/ozlemsoydan/ToDoList/blob/main/ss/update.png)
