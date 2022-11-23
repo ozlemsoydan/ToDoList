@@ -1,14 +1,12 @@
 package com.ozlemaglar.ToDoList.services;
 
 import com.ozlemaglar.ToDoList.exception.ResourceNotFoundException;
+import com.ozlemaglar.ToDoList.model.Item;
 import com.ozlemaglar.ToDoList.repo.ITodoRepo;
 import com.ozlemaglar.ToDoList.services.impl.ITodoService;
-import com.ozlemaglar.ToDoList.model.Item;
 import lombok.RequiredArgsConstructor;
-
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.*;
 
@@ -35,7 +33,11 @@ public class TodoService implements ITodoService {
 
     @Override
     public List<Item> getAllTodo() {
-        return (List<Item>) repository.findAll();
+//        //tarihe göre tesrten sırala
+//        List<Item> orderList = (List<Item>) repository.findAll();
+//        orderList.sort(Comparator.comparing(Item::getCreatedDate).reversed());
+
+        return repository.findAllByOrderByUpdateDateDesc();
     }
 
     @Override

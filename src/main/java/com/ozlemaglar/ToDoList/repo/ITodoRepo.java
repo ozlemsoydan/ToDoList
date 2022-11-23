@@ -12,6 +12,10 @@ import java.util.List;
 @Repository
 public interface ITodoRepo extends CrudRepository<Item, Long> {
 
-    @Query(value = "SELECT u FROM Item u order by u.createdDate desc")
+    @Query(value = "SELECT i FROM Item i order by i.createdDate desc")
     List<Item> findAllByOrderByDateDesc();
+
+    @Query(value = "SELECT i FROM Item i order by i.updateDate desc")
+    List<Item> findAllByOrderByUpdateDateDesc();
+
 }
