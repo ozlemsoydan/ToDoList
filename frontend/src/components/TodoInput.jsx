@@ -7,9 +7,9 @@ import toast from 'react-hot-toast';
 function TodoInput() {
     const [text, setText] = useState();
     const [todos, setTodo] = useState([]);
-    const [value, setValue] = useState();
     const input = useRef();
-    const [checked, setChecked] = useState([]);
+    
+
 
 
     //list
@@ -87,49 +87,8 @@ function TodoInput() {
         setTodo(todos.filter((a) => a.id !== todo.id));
     };
 
-    //change
-    function handleChangeTodo(newTodo) {
-        setTodo(
-            todos.map((t) => {
-                if (t.id === newTodo.id) {
-                    console.log("newTodo", newTodo);
-                    return newTodo;
-                } else {
-                    console.log("t", t);
-                    return t;
-                }
-            })
-        );
+ 
 
-
-    }
-
-    //update
-    const updateTodo = (todo) => {
-        TodoService.updateTodo(todo).then(response => {
-            setTodo(response.data);
-            toast.success('Kayıt Güncellendi')
-            refreshList();
-
-        })
-            .catch(e => {
-                toast.error('Hata oluştu!')
-            });
-    }
-
-
-
-    const handleCheck = (event) => {
-        var updatedList = [...checked];
-
-        if (event.target.checked) {
-            updatedList = [...checked, event.target.value];
-        } else {
-            updatedList.splice(checked.indexOf(event.target.value), 1);
-        }
-        setChecked(updatedList);
-
-    };
 
     return (
         <>
@@ -140,7 +99,7 @@ function TodoInput() {
                 <form className="form-group m-5"
                     onSubmit={(e) => e.preventDefault()}>
 
-                    <input className="todo-form" placeholder="Yapılacaklar..." type="text" name="search" value={text} ref={input}
+                    <input className="todo-form w-75" placeholder="Yapılacaklar..." type="text" name="search" value={text} ref={input}
                         onChange={(e) => setText(e.target.value)} />
 
                     <button className="btn btn-primary"
@@ -151,14 +110,12 @@ function TodoInput() {
                 <div className="container">
                     <ul className="list-group ">
                         {todos.map((todo) => (
-                            <li className="list-group-item mt-1 pt-4" key={todo.id}>
+                            <li className="list-group-item mt-1" key={todo.id}>
 
                                 <TodoList
                                     todo={todo}
                                     removeById={removeById}
-                                    handleChangeTodo={handleChangeTodo}
-                                    updateTodo={updateTodo}
-                                    handleCheck={handleCheck} />
+                                    refreshList={refreshList}/>
                             </li>
                         ))}
 
