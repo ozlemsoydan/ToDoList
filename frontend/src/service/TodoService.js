@@ -17,8 +17,8 @@ class TodoService {
     }
 
     //list
-    getAllTodo() {
-        return axios.get(todoURL + "list")
+    getAllTodo(sort) {
+        return axios.get(todoURL + "list?sort=" +sort)
     }
 
     //update

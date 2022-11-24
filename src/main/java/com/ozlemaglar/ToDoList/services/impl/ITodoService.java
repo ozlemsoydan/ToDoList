@@ -14,7 +14,7 @@ public interface ITodoService {
     public Item getItemById(Long id);
 
     //list
-    public List<Item> getAllTodo();
+    public List<Item> getAllTodo(String sort);
 
     //update
     public Item updateTodo(Item item);

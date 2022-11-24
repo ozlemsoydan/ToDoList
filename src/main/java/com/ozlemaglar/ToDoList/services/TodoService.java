@@ -3,6 +3,7 @@ package com.ozlemaglar.ToDoList.services;
 import com.ozlemaglar.ToDoList.exception.ResourceNotFoundException;
 import com.ozlemaglar.ToDoList.model.Item;
 import com.ozlemaglar.ToDoList.repo.ITodoRepo;
+import com.ozlemaglar.ToDoList.enums.Sort;
 import com.ozlemaglar.ToDoList.services.impl.ITodoService;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
@@ -19,7 +20,7 @@ public class TodoService implements ITodoService {
 
     @Override
     public Item createTodo(Item item) {
-        item.setCreatedDate(new Date());
+        item.setCreateDate(new Date());
         item.setDone(false);
         repository.save(item);
         return item;
@@ -32,12 +33,29 @@ public class TodoService implements ITodoService {
     }
 
     @Override
-    public List<Item> getAllTodo() {
-//        //tarihe göre tesrten sırala
-//        List<Item> orderList = (List<Item>) repository.findAll();
-//        orderList.sort(Comparator.comparing(Item::getCreatedDate).reversed());
+    public List<Item> getAllTodo(String sort) {
+        //gelen parametreye göre ilgili repo methoduna git
 
-        return repository.findAllByOrderByUpdateDateDesc();
+        if (sort.equals(Sort.CREATE_DATE.toString())) {
+            //Oluşturma tarihine göre sıralama
+            //List<Item> orderList = (List<Item>) repository.findAll();
+            //orderList.sort(Comparator.comparing(Item::getCreateDate).reversed());
+            return repository.findAllByCreatedDateBefore();
+
+        } else if (sort.equals(Sort.UPDATE_DATE.toString())) {
+            return repository.findAllByUpdateDateBefore();
+
+        } else if (sort.equals(Sort.DONE.toString())) {
+            return repository.findAllByDoneIsBefore();
+
+        } else if (sort.equals(Sort.NOT_DONE.toString())) {
+            return repository.findAllByDoneIsAfter();
+
+        } else {
+            throw new ResourceNotFoundException("Hatalı sorgu");
+        }
+
+
     }
 
     @Override
@@ -45,7 +63,7 @@ public class TodoService implements ITodoService {
         if (StringUtils.isNotEmpty(item.getId().toString())) {
             Optional<Item> item1 = repository.findById(item.getId());
             if (item1.isPresent()) {
-                item.setCreatedDate(item1.get().getCreatedDate());
+                item.setCreateDate(item1.get().getCreateDate());
                 item.setUpdateDate(new Date());
                 repository.save(item);
 

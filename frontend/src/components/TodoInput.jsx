@@ -8,17 +8,18 @@ function TodoInput() {
     const [text, setText] = useState();
     const [todos, setTodo] = useState([]);
     const input = useRef();
-    
+
 
 
 
     //list
     useEffect(() => {
-        getAll();
+        getAll("CREATE_DATE");
     }, []);
 
-    const getAll = () => {
-        TodoService.getAllTodo()
+    const getAll = (newSort) => {
+
+        TodoService.getAllTodo(newSort)
             .then(response => {
                 setTodo(response.data);
                 console.log(response.data);
@@ -27,6 +28,9 @@ function TodoInput() {
                 console.log(e);
             });
     };
+
+
+
 
 
     //add
@@ -50,7 +54,6 @@ function TodoInput() {
                 });
         }
     };
-
 
     //refresh
     const refreshList = () => {
@@ -87,8 +90,6 @@ function TodoInput() {
         setTodo(todos.filter((a) => a.id !== todo.id));
     };
 
- 
-
 
     return (
         <>
@@ -107,7 +108,17 @@ function TodoInput() {
                 </form>
 
 
+
                 <div className="container">
+                    <select className="custom-select mb-2 p-1"   onChange={(e) => getAll(e.target.value)} >
+
+                        <option value="">Sırala</option>
+                        <option value={"DONE"}>Tamamlanmış</option>
+                        <option value={"NOT_DONE"}>Tamamlanmamış </option>
+                        <option value={"CREATE_DATE"}>Oluşturma tarihi</option>
+                        <option value={"UPDATE_DATE"}>Güncelleme tarihi</option>
+                    </select>
+
                     <ul className="list-group ">
                         {todos.map((todo) => (
                             <li className="list-group-item mt-1" key={todo.id}>
@@ -115,7 +126,7 @@ function TodoInput() {
                                 <TodoList
                                     todo={todo}
                                     removeById={removeById}
-                                    refreshList={refreshList}/>
+                                    refreshList={refreshList} />
                             </li>
                         ))}
 

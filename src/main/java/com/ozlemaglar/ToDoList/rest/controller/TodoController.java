@@ -28,9 +28,9 @@ public class TodoController {
     }
 
     //LİST
-    @GetMapping("/list")
-    public ResponseEntity<List<Item>> getAllTodo() {
-        List<Item> list = todoService.getAllTodo();
+    @GetMapping(value = "/list", params = "sort")
+    public ResponseEntity<List<Item>> getAllTodo(@RequestParam(name = "sort") String sort) {
+        List<Item> list = todoService.getAllTodo(sort);
         return ResponseEntity.ok(list);
     }
 
