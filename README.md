@@ -1,5 +1,5 @@
 <h1 align="center">Hi 👋, I'm Özlem</h1>
-<h3 align="center">To do list project for Spring Boot and React</h3>
+<h3 align="center">To-do list single page project for Spring Boot and React</h3>
 
 <h3 align="left">Connect with me:</h3>
 <p align="left">
