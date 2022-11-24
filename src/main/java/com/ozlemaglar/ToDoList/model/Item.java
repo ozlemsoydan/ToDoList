@@ -30,9 +30,9 @@ public class Item {
     @Column
     private boolean isDone;
 
-    @Column(name = "created_date")
+    @Column(name = "create_date")
     @CreatedDate
-    private Date createdDate;
+    private Date createDate;
 
     @Column(name = "update_date")
     @LastModifiedDate
